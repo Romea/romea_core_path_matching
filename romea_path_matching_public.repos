@@ -2,6 +2,9 @@ repositories:
     romea_core/romea_common:
         type: git
         url: https://github.com/Romea/romea-core-common.git
+    romea_core/romea_mobile_base:
+        type: git
+        url: https://github.com/Romea/romea-core-mobile-base.git
     romea_core/romea_path:
         type: git
         url: https://github.com/Romea/romea-core-path.git
