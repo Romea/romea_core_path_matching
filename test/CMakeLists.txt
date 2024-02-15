@@ -9,3 +9,8 @@ add_executable(${PROJECT_NAME}_test_on_the_fly_path_matching_diagnostic test_on_
 target_link_libraries(${PROJECT_NAME}_test_on_the_fly_path_matching_diagnostic ${PROJECT_NAME} GTest::GTest GTest::Main)
 target_compile_options(${PROJECT_NAME}_test_on_the_fly_path_matching_diagnostic PRIVATE -std=c++17)
 add_test(test_on_the_fly_path_matching_diagnostic ${PROJECT_NAME}_test_on_the_fly_path_matching_diagnostic)
+
+add_executable(${PROJECT_NAME}_test_on_the_fly_path_matching test_on_the_fly_path_matching.cpp)
+target_link_libraries(${PROJECT_NAME}_test_on_the_fly_path_matching ${PROJECT_NAME} GTest::GTest GTest::Main)
+target_compile_options(${PROJECT_NAME}_test_on_the_fly_path_matching PRIVATE -std=c++17)
+add_test(test_on_the_fly_path_matching ${PROJECT_NAME}_test_on_the_fly_path_matching)
