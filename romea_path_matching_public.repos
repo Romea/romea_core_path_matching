@@ -1,0 +1,10 @@
+repositories:
+    romea_core/romea_common:
+        type: git
+        url: https://github.com/Romea/romea-core-common.git
+    romea_core/romea_path:
+        type: git
+        url: https://github.com/Romea/romea-core-path.git
+    romea_core/romea_path_matching:
+        type: git
+        url: https://github.com/Romea/romea-core-path-matching.git
