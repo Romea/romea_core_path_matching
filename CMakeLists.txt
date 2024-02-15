@@ -8,8 +8,6 @@ project(
   LANGUAGES CXX)
 
 find_package(romea_core_common REQUIRED)
-find_package(romea_core_control REQUIRED)
-find_package(romea_core_mobile_base REQUIRED)
 find_package(romea_core_path REQUIRED)
 
 find_package(GSL REQUIRED)
@@ -38,8 +36,6 @@ target_compile_options(${PROJECT_NAME} PRIVATE
 
 target_link_libraries(${PROJECT_NAME} PUBLIC
   romea_core_common::romea_core_common
-  romea_core_control::romea_core_control
-  romea_core_mobile_base::romea_core_mobile_base
   romea_core_path::romea_core_path)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
