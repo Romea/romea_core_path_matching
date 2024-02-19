@@ -27,8 +27,6 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 
 target_include_directories(${PROJECT_NAME} SYSTEM PUBLIC
   ${romea_core_common_INCLUDE_DIRS}
-  ${romea_core_control_INCLUDE_DIRS}
-  ${romea_core_mobile_base_INCLUDE_DIRS}
   ${romea_core_path_INCLUDE_DIRS})
 
 target_compile_options(${PROJECT_NAME} PRIVATE

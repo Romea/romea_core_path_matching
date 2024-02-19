@@ -28,7 +28,7 @@ noetic_catkin_build:
   script:
     - catkin init
     - catkin build --cmake-args -DBUILD_TESTS=ON
-    - cd build/romea_core_path
+    - cd build/romea_core_path_matching
     - GTEST_COLOR=1 ctest --output-on-failure
 
 # galatic
@@ -37,7 +37,7 @@ galactic_focal_build:
   stage: build
   script:
     - colcon build --cmake-args -DBUILD_TESTS=ON
-    - cd build/romea_core_path
+    - cd build/romea_core_path_matching
     - GTEST_COLOR=1 ctest --output-on-failure
 
 # galatic
@@ -46,5 +46,5 @@ humble_jammy_build:
   stage: build
   script:
     - colcon build --cmake-args -DBUILD_TESTS=ON
-    - cd build/romea_core_path
+    - cd build/romea_core_path_matching
     - GTEST_COLOR=1 ctest --output-on-failure
