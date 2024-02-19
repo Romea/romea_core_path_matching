@@ -35,7 +35,6 @@ class PathMatching
 public:
   PathMatching(
     const std::string & pathFilename,
-    const double & predictionTimeHorizon,
     const double & maximalResearchRadius,
     const double & interpolationWindowLength);
 
@@ -44,16 +43,15 @@ public:
   std::optional<PathMatchedPoint2D> match(
     const Duration & stamp,
     const Pose2D & vehiclePose,
-    const Twist2D & vehicleTwist);
+    const Twist2D & vehicleTwist,
+    const double & predictionTimeHorizon = 0.0);
 
   DiagnosticReport getReport(const Duration & stamp);
 
   void reset();
 
 protected:
-  double predictionTimeHorizon_;
   double maximalResearchRadius_;
-  double interpolationWindowLength_;
 
   Path2D path_;
   std::vector<PathMatchedPoint2D> matchedPoints_;

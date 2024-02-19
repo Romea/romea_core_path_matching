@@ -43,12 +43,9 @@ namespace core
 //-----------------------------------------------------------------------------
 PathMatching::PathMatching(
   const std::string & pathFilename,
-  const double & predictionTimeHorizon,
   const double & maximalResearchRadius,
   const double & interpolationWindowLength)
-: predictionTimeHorizon_(predictionTimeHorizon),
-  maximalResearchRadius_(maximalResearchRadius),
-  interpolationWindowLength_(interpolationWindowLength),
+: maximalResearchRadius_(maximalResearchRadius),
   path_(create_path(pathFilename, interpolationWindowLength)),
   matchedPoints_(),
   trackedMatchedPointIndex_(0),
@@ -66,7 +63,8 @@ const Path2D PathMatching::getPath() const
 std::optional<PathMatchedPoint2D> PathMatching::match(
   const Duration & stamp,
   const Pose2D & vehiclePose,
-  const Twist2D & vehicleTwist)
+  const Twist2D & vehicleTwist,
+  const double & predictionTimeHorizon)
 {
   diagnostics_.updateLocalisationRate(stamp);
   double vehicleSpeed = vehicleTwist.linearSpeeds.x();
@@ -76,7 +74,7 @@ std::optional<PathMatchedPoint2D> PathMatching::match(
       path_,
       vehiclePose,
       vehicleSpeed,
-      predictionTimeHorizon_,
+      predictionTimeHorizon,
       maximalResearchRadius_);
   } else {
     matchedPoints_ = romea::core::match(
@@ -84,7 +82,7 @@ std::optional<PathMatchedPoint2D> PathMatching::match(
       vehiclePose,
       vehicleSpeed,
       matchedPoints_[trackedMatchedPointIndex_], 2,
-      predictionTimeHorizon_,
+      predictionTimeHorizon,
       maximalResearchRadius_);
   }
 
