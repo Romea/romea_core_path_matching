@@ -119,7 +119,6 @@ TEST_F(TestPathMatchingDiagnostic, testLocalisatinTimeout)
   EXPECT_STREQ(report.info["path_file_name"].c_str(), "bar.json");
 
   std::cout << report << std::endl;
-
 }
 
 //-----------------------------------------------------------------------------
