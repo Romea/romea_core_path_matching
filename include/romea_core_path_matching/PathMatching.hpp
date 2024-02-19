@@ -38,7 +38,7 @@ public:
     const double & maximalResearchRadius,
     const double & interpolationWindowLength);
 
-  const Path2D getPath() const;
+  const Path2D & getPath() const;
 
   std::optional<PathMatchedPoint2D> match(
     const Duration & stamp,

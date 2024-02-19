@@ -54,7 +54,7 @@ PathMatching::PathMatching(
 }
 
 //-----------------------------------------------------------------------------
-const Path2D PathMatching::getPath() const
+const Path2D & PathMatching::getPath() const
 {
   return path_;
 }
