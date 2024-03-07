@@ -15,6 +15,7 @@
 // std
 #include <optional>
 #include <string>
+#include <vector>
 
 // romea
 #include "romea_core_path/PathFile.hpp"
@@ -48,7 +49,7 @@ PathMatching::PathMatching(
 : maximalResearchRadius_(maximalResearchRadius),
   path_(create_path(pathFilename, interpolationWindowLength)),
   matchedPoints_(),
-  trackedMatchedPointIndex_(0),
+  // trackedMatchedPointIndex_(0),
   diagnostics_(pathFilename)
 {
 }
@@ -60,7 +61,7 @@ const Path2D & PathMatching::getPath() const
 }
 
 //-----------------------------------------------------------------------------
-std::optional<PathMatchedPoint2D> PathMatching::match(
+std::vector<PathMatchedPoint2D> PathMatching::match(
   const Duration & stamp,
   const Pose2D & vehiclePose,
   const Twist2D & vehicleTwist,
@@ -81,15 +82,17 @@ std::optional<PathMatchedPoint2D> PathMatching::match(
       path_,
       vehiclePose,
       vehicleSpeed,
-      matchedPoints_[trackedMatchedPointIndex_], 2,
+      // matchedPoints_[trackedMatchedPointIndex_], 2,
+      matchedPoints_[0], 2,
       predictionTimeHorizon,
       maximalResearchRadius_);
   }
 
   if (!matchedPoints_.empty()) {
     diagnostics_.updatePathMatchingStatus(true);
-    trackedMatchedPointIndex_ = bestMatchedPointIndex(matchedPoints_, vehicleSpeed);
-    return matchedPoints_[trackedMatchedPointIndex_];
+    // trackedMatchedPointIndex_ = bestMatchedPointIndex(matchedPoints_, vehicleSpeed);
+    // return matchedPoints_[trackedMatchedPointIndex_];
+    return matchedPoints_;
   } else {
     diagnostics_.updatePathMatchingStatus(false);
     return {};

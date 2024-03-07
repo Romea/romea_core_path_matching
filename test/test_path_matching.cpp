@@ -45,10 +45,11 @@ TEST_F(TestPathMatching, testPathMatchingFailed)
   follower_pose.position.x() = 10;
   follower_pose.position.y() = 20;
 
-  auto pathMatchingPoint = pathMatching.match(
+  auto pathMatchingPoints = pathMatching.match(
     romea::core::durationFromSecond(10), follower_pose, follower_twist);
 
-  EXPECT_FALSE(pathMatchingPoint.has_value());
+  // EXPECT_FALSE(pathMatchingPoint.has_value());
+  EXPECT_TRUE(pathMatchingPoints.empty());
 }
 
 //-----------------------------------------------------------------------------
@@ -61,10 +62,11 @@ TEST_F(TestPathMatching, testPathMatchingOK)
   follower_pose.position.x() = 10;
   follower_pose.position.y() = 1;
 
-  auto pathMatchingPoint = pathMatching.match(
+  auto pathMatchingPoints = pathMatching.match(
     romea::core::durationFromSecond(10), follower_pose, follower_twist);
 
-  EXPECT_TRUE(pathMatchingPoint.has_value());
+  // EXPECT_TRUE(pathMatchingPoint.has_value());
+  EXPECT_FALSE(pathMatchingPoints.empty());
 }
 
 

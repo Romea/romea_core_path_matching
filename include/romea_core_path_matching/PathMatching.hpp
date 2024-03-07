@@ -40,7 +40,7 @@ public:
 
   const Path2D & getPath() const;
 
-  std::optional<PathMatchedPoint2D> match(
+  std::vector<PathMatchedPoint2D> match(
     const Duration & stamp,
     const Pose2D & vehiclePose,
     const Twist2D & vehicleTwist,
@@ -55,7 +55,6 @@ protected:
 
   Path2D path_;
   std::vector<PathMatchedPoint2D> matchedPoints_;
-  size_t trackedMatchedPointIndex_;
 
   PathMatchingDiagnostic diagnostics_;
 };
