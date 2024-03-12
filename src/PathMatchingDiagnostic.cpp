@@ -57,6 +57,7 @@ void PathMatchingDiagnostic::updateLocalisationRate(const Duration & duration)
 //-----------------------------------------------------------------------------
 void PathMatchingDiagnostic::updatePathMatchingStatus(const bool & status)
 {
+  pathMatchingStatus_.diagnostics.clear();
   if (status) {
     pathMatchingStatus_.diagnostics.push_back(
       Diagnostic(DiagnosticStatus::OK, "path matching succeeded."));
