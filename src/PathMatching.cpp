@@ -18,6 +18,7 @@
 #include <vector>
 
 // romea
+#include "romea_core_common/geodesy/ENUConverter.hpp"
 #include "romea_core_path/PathFile.hpp"
 #include "romea_core_path/PathMatching2D.hpp"
 #include "romea_core_path_matching/PathMatching.hpp"
@@ -26,11 +27,23 @@ namespace
 {
 romea::core::Path2D create_path(
   const std::string & pathFilename,
+  const romea::core::GeodeticCoordinates & wgs84Anchor,
   const double & interpolationWindowLength)
 {
   romea::core::PathFile pathFile(pathFilename);
+  romea::core::ENUConverter enuConverter(wgs84Anchor);
+  Eigen::Vector2d offset = enuConverter.toENU(*pathFile.getWGS84Anchor()).head<2>();
+  std::cout << " offset path matching " << offset.transpose() << std::endl;
+
+  std::vector<std::vector<romea::core::PathWayPoint2D>> pathWayPoints = pathFile.getWayPoints();
+  for (auto & sectionWayPoints : pathWayPoints) {
+    for (auto & wayPoints : sectionWayPoints) {
+      wayPoints.position -= offset;
+    }
+  }
+
   return romea::core::Path2D(
-    pathFile.getWayPoints(),
+    pathWayPoints,
     interpolationWindowLength,
     pathFile.getAnnotations());
 }
@@ -44,10 +57,11 @@ namespace core
 //-----------------------------------------------------------------------------
 PathMatching::PathMatching(
   const std::string & pathFilename,
+  const GeodeticCoordinates & wgs84Anchor,
   const double & maximalResearchRadius,
   const double & interpolationWindowLength)
 : maximalResearchRadius_(maximalResearchRadius),
-  path_(create_path(pathFilename, interpolationWindowLength)),
+  path_(create_path(pathFilename, wgs84Anchor, interpolationWindowLength)),
   matchedPoints_(),
   // trackedMatchedPointIndex_(0),
   diagnostics_(pathFilename)

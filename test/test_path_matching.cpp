@@ -28,9 +28,12 @@ class TestPathMatching : public ::testing::Test
 {
 public:
   TestPathMatching()
-  : pathMatching(std::string(TEST_DIR) + "/test_path_matching.cvs", 10.0, 3.0)
+  : pathMatching(std::string(TEST_DIR) + "/test_path_matching.cvs",
+      romea::core::makeGeodeticCoordinates(45.763066 / 180. * M_PI, 3.1093255 / 180. * M_PI, 457.3),
+      10.0, 3.0)
   {
   }
+
 
   romea::core::PathMatching pathMatching;
 };

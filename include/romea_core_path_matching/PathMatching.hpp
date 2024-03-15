@@ -22,6 +22,7 @@
 
 // romea
 #include "romea_core_common/time/Time.hpp"
+#include "romea_core_common/geodesy/GeodeticCoordinates.hpp"
 #include "romea_core_path/PathMatching2D.hpp"
 #include "romea_core_path_matching/PathMatchingDiagnostic.hpp"
 
@@ -35,6 +36,7 @@ class PathMatching
 public:
   PathMatching(
     const std::string & pathFilename,
+    const GeodeticCoordinates & wgs84Anchor,
     const double & maximalResearchRadius,
     const double & interpolationWindowLength);
 
