@@ -64,6 +64,7 @@ const Path2D & PathMatching::getPath() const
 void PathMatching::setPath(Path2D && path)
 {
   path_ = std::move(path);
+  reset();
 }
 
 //-----------------------------------------------------------------------------
