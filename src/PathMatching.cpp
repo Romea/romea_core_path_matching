@@ -61,6 +61,12 @@ const Path2D & PathMatching::getPath() const
 }
 
 //-----------------------------------------------------------------------------
+void PathMatching::setPath(Path2D && path)
+{
+  path_ = std::move(path);
+}
+
+//-----------------------------------------------------------------------------
 std::vector<PathMatchedPoint2D> PathMatching::match(
   const Duration & stamp,
   const Pose2D & vehiclePose,

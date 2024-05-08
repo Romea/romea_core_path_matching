@@ -40,6 +40,8 @@ public:
 
   const Path2D & getPath() const;
 
+  void setPath(Path2D && path);
+
   std::vector<PathMatchedPoint2D> match(
     const Duration & stamp,
     const Pose2D & vehiclePose,
