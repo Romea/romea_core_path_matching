@@ -43,7 +43,6 @@ The Romea Core Path Matching library, written by **Jean Laneurit** and **Cyrille
 **Jean Laneurit**  
 **Roland Lenain**  
 **Cyrille Pierre**  
-**Christophe Cariou**  
 **Vincent Rousseau**  
 **Benoît Thuilot**    
 
