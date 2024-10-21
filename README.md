@@ -1,6 +1,6 @@
-# Romea Core Path Matching Library
+# romea_core_path_matching
 
-This library provides two implementations of path matching algorithms:
+This project is a  C++ library that provides two implementations of path matching algorithms:
 
 1. **"Static" Path Matching**: This implementation is used to follow a predefined, static trajectory. It is ideal for trajectory tracking tasks.
 2. **"On the fly" Path Matching**: This implementation builds the path dynamically by considering the successive positions of a leading robot. It is designed for robot following and platooning purposes.
@@ -38,7 +38,7 @@ This project is released under the Apache License 2.0. See the LICENSE file for 
 
 ## **Authors**
 
-The Romea Core Path Matching library, written by **Jean Laneurit** and **Cyrille Pierre**, was developed during ANR Baudet Rob 2 and ANR Tiara projects. Several individuals contributed scientifically to the development of this library:
+The romea_core_path_matching library, written by **Jean Laneurit** and **Cyrille Pierre**, was developed during ANR Baudet Rob 2 and ANR Tiara projects. Several individuals contributed scientifically to the development of this library:
 
 **Jean Laneurit**  
 **Roland Lenain**  
@@ -48,4 +48,4 @@ The Romea Core Path Matching library, written by **Jean Laneurit** and **Cyrille
 
 ## **Contact**
 
-If you have any questions or comments about Romea Core Path Matching library, please contact **[Jean Laneurit](mailto:jean.laneurit@inrae.fr)** or **[Cyrille Pierre](mailto:cyrille.pierre@inrae.fr)**.
+If you have any questions or comments about romea_core_path_matching library, please contact **[Jean Laneurit](mailto:jean.laneurit@inrae.fr)** or **[Cyrille Pierre](mailto:cyrille.pierre@inrae.fr)**.
