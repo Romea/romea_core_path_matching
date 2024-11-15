@@ -51,19 +51,24 @@ namespace core
 
 //-----------------------------------------------------------------------------
 OnTheFlyPathMatching::OnTheFlyPathMatching(
-  const double & predictionTimeHorizon,
   const double & maximalResearchRadius,
   const double & interpolationWindowLength,
   const double & minimalDistanceBetweenTwoPoints,
   const double & minimalVehicleSpeedToInsertPoint)
-: predictionTimeHorizon_(predictionTimeHorizon),
-  maximalResearchRadius_(maximalResearchRadius),
+: maximalResearchRadius_(maximalResearchRadius),
   interpolationWindowLength_(interpolationWindowLength),
   minimalDistanceBetweenTwoPoints_(minimalDistanceBetweenTwoPoints),
   minimalVehicleSpeedToInsertPoint_(minimalVehicleSpeedToInsertPoint),
   pathSection_(interpolationWindowLength),
   matchedPoint_()
 {
+}
+
+//-----------------------------------------------------------------------------
+const PathCurve2D & OnTheFlyPathMatching::getCurve(
+  const size_t & curve_index) const
+{
+  return pathSection_.getCurve(curve_index);
 }
 
 //-----------------------------------------------------------------------------
@@ -87,15 +92,16 @@ bool OnTheFlyPathMatching::updatePath(
 std::optional<PathMatchedPoint2D> OnTheFlyPathMatching::match(
   const Duration & stamp,
   const core::Pose2D & vehiclePose,
-  const core::Twist2D & vehicleTwist)
+  const core::Twist2D & vehicleTwist,
+  const double & predictionTimeHorizon)
 {
   diagnostics_.updateFollowerLocalisationRate(stamp);
 
   if (pathSection_.getLength() > 2) {
-    tryMatchOnFullPath_(vehiclePose, vehicleTwist);
+    tryMatchOnFullPath_(vehiclePose, vehicleTwist, predictionTimeHorizon);
 
     if (!matchedPoint_.has_value()) {
-      tryMatchOnFirstPoint_(vehiclePose, vehicleTwist);
+      tryMatchOnFirstPoint_(vehiclePose, vehicleTwist, predictionTimeHorizon);
     }
   }
   diagnostics_.updatePathMatchingStatus(matchedPoint_.has_value());
@@ -117,7 +123,8 @@ void OnTheFlyPathMatching::reset()
 //-----------------------------------------------------------------------------
 void OnTheFlyPathMatching::tryMatchOnFullPath_(
   const core::Pose2D & followerVehiclePose,
-  const core::Twist2D & followerVehicleTwist)
+  const core::Twist2D & followerVehicleTwist,
+  const double & predictionTimeHorizon)
 {
   double followerVehicleSpeed = followerVehicleTwist.linearSpeeds.x();
 
@@ -128,7 +135,7 @@ void OnTheFlyPathMatching::tryMatchOnFullPath_(
       followerVehicleSpeed,
       *matchedPoint_,
       10,
-      predictionTimeHorizon_,
+      predictionTimeHorizon,
       maximalResearchRadius_);
 
   } else {
@@ -136,7 +143,7 @@ void OnTheFlyPathMatching::tryMatchOnFullPath_(
       pathSection_,
       followerVehiclePose,
       followerVehicleSpeed,
-      predictionTimeHorizon_,
+      predictionTimeHorizon,
       maximalResearchRadius_);
   }
 }
@@ -144,7 +151,8 @@ void OnTheFlyPathMatching::tryMatchOnFullPath_(
 //-----------------------------------------------------------------------------
 void OnTheFlyPathMatching::tryMatchOnFirstPoint_(
   const core::Pose2D & followerVehiclePose,
-  const core::Twist2D & /*followerVehicleTwist*/)
+  const core::Twist2D & /*followerVehicleTwist*/,
+  const double & /*predictionTimeHorizon*/)
 {
   Eigen::Vector2d firstPathPosition(pathSection_.getX()[0], pathSection_.getX()[1]);
   Eigen::Vector2d directionToReach = followerVehiclePose.position - firstPathPosition;

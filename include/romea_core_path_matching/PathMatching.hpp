@@ -42,6 +42,13 @@ public:
 
   const Path2D & getPath() const;
 
+  const PathSection2D & getSection(
+    const size_t & section_index) const;
+
+  const PathCurve2D & getCurve(
+    const size_t & section_index,
+    const size_t & curve_index) const;
+
   void setPath(Path2D && path);
 
   std::vector<PathMatchedPoint2D> match(

@@ -33,7 +33,7 @@ class TestOnTheFlyPathMatching : public ::testing::Test
 {
 public:
   TestOnTheFlyPathMatching()
-  : pathMatching_(1.0, 10.0, 3.0, 0.1, 0.1)
+  : pathMatching_(1.0, 10.0, 3.0, 0.1)
   {
   }
 
@@ -80,7 +80,7 @@ TEST_F(TestOnTheFlyPathMatching, testPathMatchingOK) {
   follower_pose.position.y() = 1;
 
   auto pathMatchingPoint = pathMatching_.match(
-    romea::core::durationFromSecond(10), follower_pose, follower_twist);
+    romea::core::durationFromSecond(10), follower_pose, follower_twist, 0.1);
 
   EXPECT_TRUE(pathMatchingPoint.has_value());
 }

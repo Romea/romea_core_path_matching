@@ -75,6 +75,20 @@ const Path2D & PathMatching::getPath() const
 }
 
 //-----------------------------------------------------------------------------
+const PathSection2D & PathMatching::getSection(const size_t & section_index) const
+{
+  return path_.getSection(section_index);
+}
+
+//-----------------------------------------------------------------------------
+const PathCurve2D & PathMatching::getCurve(
+  const size_t & section_index,
+  const size_t & curve_index) const
+{
+  return getSection(section_index).getCurve(curve_index);
+}
+
+//-----------------------------------------------------------------------------
 void PathMatching::setPath(Path2D && path)
 {
   path_ = std::move(path);

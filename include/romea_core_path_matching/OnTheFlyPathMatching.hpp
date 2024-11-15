@@ -32,11 +32,14 @@ class OnTheFlyPathMatching
 {
 public:
   OnTheFlyPathMatching(
-    const double & predictionTimeHorizon,
     const double & maximalResearchRadius,
     const double & interpolationWindowLength,
     const double & minimalDistanceBetweenTwoPoints,
     const double & minimalVehicleSpeedToInsertPoint);
+
+  const PathSection2D & getSection() const;
+
+  const PathCurve2D & getCurve(const size_t & curve_index) const;
 
   bool updatePath(
     const Duration & stamp,
@@ -46,7 +49,8 @@ public:
   std::optional<PathMatchedPoint2D> match(
     const Duration & stamp,
     const Pose2D & followerVehiclePose,
-    const Twist2D & followerVehicleTwist);
+    const Twist2D & followerVehicleTwist,
+    const double & predictionTimeHorizon = 0.0);
 
   DiagnosticReport getReport(const Duration & stamp);
 
@@ -55,18 +59,19 @@ public:
 private:
   void tryMatchOnFullPath_(
     const Pose2D & followerVehiclePose,
-    const Twist2D & followerVehicleTwist);
+    const Twist2D & followerVehicleTwist,
+    const double & predictionTimeHorizon);
 
   void tryMatchOnFirstPoint_(
     const Pose2D & followerVehiclePose,
-    const Twist2D & followerVehicleTwist);
+    const Twist2D & followerVehicleTwist,
+    const double & predictionTimeHorizon);
 
   double travelledDistance_(const Pose2D & leaderVehiclePose);
 
   double leaderVehicleSpeed_(const Twist2D & leaderVehicleTwist);
 
 protected:
-  double predictionTimeHorizon_;
   double maximalResearchRadius_;
   double interpolationWindowLength_;
   double minimalDistanceBetweenTwoPoints_;
