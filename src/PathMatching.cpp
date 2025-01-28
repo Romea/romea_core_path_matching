@@ -42,10 +42,7 @@ romea::core::Path2D create_path(
     }
   }
 
-  return romea::core::Path2D(
-    pathWayPoints,
-    interpolationWindowLength,
-    pathFile.getAnnotations());
+  return romea::core::Path2D(pathWayPoints, interpolationWindowLength, pathFile.getAnnotations());
 }
 }  // namespace
 
@@ -82,8 +79,7 @@ const PathSection2D & PathMatching::getSection(const size_t & section_index) con
 
 //-----------------------------------------------------------------------------
 const PathCurve2D & PathMatching::getCurve(
-  const size_t & section_index,
-  const size_t & curve_index) const
+  const size_t & section_index, const size_t & curve_index) const
 {
   return getSection(section_index).getCurve(curve_index);
 }
@@ -107,20 +103,35 @@ std::vector<PathMatchedPoint2D> PathMatching::match(
 
   if (matchedPoints_.empty()) {
     matchedPoints_ = romea::core::match(
-      path_,
-      vehiclePose,
-      vehicleSpeed,
-      predictionTimeHorizon,
-      maximalResearchRadius_);
+      path_, vehiclePose, vehicleSpeed, predictionTimeHorizon, maximalResearchRadius_);
   } else {
     matchedPoints_ = romea::core::match(
       path_,
       vehiclePose,
       vehicleSpeed,
       // matchedPoints_[trackedMatchedPointIndex_], 2,
-      matchedPoints_[0], 2,
+      matchedPoints_[0],
+      2,
       predictionTimeHorizon,
       maximalResearchRadius_);
+  }
+
+  // if the robot is after the end of the traj, reset the matching (matches from scratch)
+  if (!matchedPoints_.empty()) {
+    auto matchedPoint = matchedPoints_.front();
+    std::size_t sectionIndex = matchedPoint.sectionIndex;
+    std::size_t curveIndex = matchedPoint.curveIndex;
+    std::size_t nbSections = path_.getSections().size();
+    auto section = this->getSection(sectionIndex);
+
+    if (sectionIndex == nbSections - 1 && curveIndex == section.size() - 1) {
+      double abcissa = matchedPoint.frenetPose.curvilinearAbscissa;
+      if (abcissa > matchedPoint.sectionMaximalCurvilinearAbscissa) {
+        // std::cerr << "reset matching ######################" << std::endl;
+        matchedPoints_ = romea::core::match(
+          path_, vehiclePose, vehicleSpeed, predictionTimeHorizon, maximalResearchRadius_);
+      }
+    }
   }
 
   if (!matchedPoints_.empty()) {
@@ -128,10 +139,9 @@ std::vector<PathMatchedPoint2D> PathMatching::match(
     // trackedMatchedPointIndex_ = bestMatchedPointIndex(matchedPoints_, vehicleSpeed);
     // return matchedPoints_[trackedMatchedPointIndex_];
     return matchedPoints_;
-  } else {
-    diagnostics_.updatePathMatchingStatus(false);
-    return {};
   }
+  diagnostics_.updatePathMatchingStatus(false);
+  return {};
 }
 
 //-----------------------------------------------------------------------------
