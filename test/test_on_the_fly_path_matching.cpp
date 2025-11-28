@@ -33,7 +33,7 @@ class TestOnTheFlyPathMatching : public ::testing::Test
 {
 public:
   TestOnTheFlyPathMatching()
-  : pathMatching_(1.0, 10.0, 3.0, 0.1)
+  : pathMatching_(10.0, 3.0, 0.1, 1.0)
   {
   }
 

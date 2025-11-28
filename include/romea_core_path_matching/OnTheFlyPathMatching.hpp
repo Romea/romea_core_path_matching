@@ -67,9 +67,9 @@ private:
     const Twist2D & followerVehicleTwist,
     const double & predictionTimeHorizon);
 
-  double travelledDistance_(const Pose2D & leaderVehiclePose);
+  bool checkTravelledDistance_(const Pose2D & leaderVehiclePose);
 
-  double leaderVehicleSpeed_(const Twist2D & leaderVehicleTwist);
+  bool checkLeaderVehicleSpeed_(const Twist2D & leaderVehicleTwist);
 
 protected:
   double maximalResearchRadius_;

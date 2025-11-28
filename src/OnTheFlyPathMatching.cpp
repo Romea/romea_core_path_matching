@@ -78,9 +78,7 @@ bool OnTheFlyPathMatching::updatePath(
   const Twist2D & leaderVehicleTwist)
 {
   diagnostics_.updateLeaderLocalisationRate(stamp);
-  if (travelledDistance_(leaderVehiclePose) > minimalDistanceBetweenTwoPoints_ &&
-    leaderVehicleSpeed_(leaderVehicleTwist) > minimalVehicleSpeedToInsertPoint_)
-  {
+  if (checkTravelledDistance_(leaderVehiclePose) && checkLeaderVehicleSpeed_(leaderVehicleTwist)) {
     pathSection_.addWayPoint(PathWayPoint2D(leaderVehiclePose.position));
     return true;
   } else {
@@ -162,19 +160,21 @@ void OnTheFlyPathMatching::tryMatchOnFirstPoint_(
 }
 
 //-----------------------------------------------------------------------------
-double OnTheFlyPathMatching::travelledDistance_(const core::Pose2D & leaderVehiclePose)
+bool OnTheFlyPathMatching::checkTravelledDistance_(const core::Pose2D & leaderVehiclePose)
 {
+  if (pathSection_.getLength() == 0) {
+    return true;
+  }
+
   const Eigen::Vector2d & leaderPosition = leaderVehiclePose.position;
-  static Eigen::Vector2d previousLeaderPosition = leaderPosition;
-  double distance = (leaderPosition - previousLeaderPosition).norm();
-  previousLeaderPosition = leaderPosition;
-  return distance;
+  Eigen::Vector2d previousLeaderPosition(pathSection_.getX().back(), pathSection_.getY().back());
+  return (leaderPosition - previousLeaderPosition).norm() > minimalDistanceBetweenTwoPoints_;
 }
 
 //-----------------------------------------------------------------------------
-double OnTheFlyPathMatching::leaderVehicleSpeed_(const core::Twist2D & leaderVehicleTwist)
+bool OnTheFlyPathMatching::checkLeaderVehicleSpeed_(const core::Twist2D & leaderVehicleTwist)
 {
-  return leaderVehicleTwist.linearSpeeds.norm();
+  return leaderVehicleTwist.linearSpeeds.norm() > minimalVehicleSpeedToInsertPoint_;
 }
 
 }  // namespace core
