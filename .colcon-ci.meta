@@ -1,0 +1,7 @@
+names:
+  fields2cover:
+    cmake-args:
+      - -DF2C_WITH_ORTOOLS=OFF
+      - -DF2C_WITH_VISUALIZATION=OFF
+      - -DBUILD_TUTORIALS=OFF
+      - -DBUILD_PYTHON=OFF

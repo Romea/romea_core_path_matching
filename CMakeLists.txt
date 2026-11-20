@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.10)
 
 project(
   "romea_core_path_matching"
@@ -6,6 +6,8 @@ project(
   #  DESCRIPTION
   #  HOMEPAGE_URL
   LANGUAGES CXX)
+
+include(GNUInstallDirs)
 
 find_package(romea_core_common REQUIRED)
 find_package(romea_core_path REQUIRED)
@@ -38,8 +40,6 @@ target_link_libraries(${PROJECT_NAME} PUBLIC
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
   GSL::gsl ${BLAS_LIBRARIES} nlohmann_json::nlohmann_json)
-
-include(GNUInstallDirs)
 
 install(
   TARGETS ${PROJECT_NAME}

@@ -8,3 +8,7 @@ repositories:
     romea_core/romea_path_matching:
         type: git
         url: git@forge.inrae.fr:romea_core/romea_path_matching.git
+    third_party/field2cover:
+        type: git
+        url: https://github.com/Romea-Third-Party/Fields2Cover.git
+        version: romea

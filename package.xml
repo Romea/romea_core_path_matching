@@ -8,6 +8,11 @@
   <license>Apache License 2.0</license>
   <buildtool_depend condition="$ROS_VERSION == 1">catkin</buildtool_depend>
   <buildtool_depend condition="$ROS_VERSION == 2">ament_cmake</buildtool_depend>
+  <depend>libgsl</depend>
+  <depend>libblas-dev</depend>
+  <build_depend>nlohmann-json-dev</build_depend>
+  <test_depend>libgtest-dev</test_depend>
+
   <export>
     <build_type>cmake</build_type>
   </export>
